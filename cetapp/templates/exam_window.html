@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <link rel="stylesheet"  href="{% static 'signup.css'%}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+  
+  <title>Quiz</title>
+  <style>
+    body{
+        font-size: xx-large;
+    }
+
+    button{
+        margin: 5px;
+        padding: 5px;
+    }
+    .option {
+      cursor: pointer;
+      display: flex;
+    }
+    .option.selected {
+      color: green;
+    }
+    .option.visited {
+      background-color: lightgray;
+    }
+    .option.unanswered {
+      background-color: orange;
+    }
+    button.not-visited {
+      background-color: purple;
+      width: 15%; 
+    }
+    button.answered {
+      background-color: green;
+      width: 15%;
+    }
+    button.unanswered {
+      background-color: red;
+      width: 15%;
+    }
+    status.answered{
+      color: green;
+    }
+    .profile {
+        position: relative;
+      }
+
+      .collapse-toggle {
+        position: relative;
+        z-index: 2;
+        background-color: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      .collapse-toggle:hover {
+        transform: scale(1.05);
+      }
+
+      .collapse-card {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        overflow: auto; /* Added to enable scrolling within the card */
+        max-height: calc(
+          100vh - 100% - 20px
+        ); /* Added to limit the card height within the visible area */
+      }
+
+      .collapse-card.show {
+        position: absolute;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .collapse-card p {
+        color: #333333;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+  </style>
+</head>
+<body class="bg-dark text-light" style="width: 100%;">
+  <header>
+      <div class="row" style="background-color: #189ab4;height: 100px;display: flex;align-items: center;justify-content: space-around;">
+        <div class="col-md-3">
+          <div class="nav-logo" style="margin-left: 20px;">
+            <div class="logo"></div>
+          </div>
+        </div>
+        <div class="col-md-5"></div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-4" style="display: grid; place-items: center">
+            </div>
+            <div class="col-md-4" style="display: grid; place-items: center">
+            </div>
+            <div class="col-md-4" style="display: grid; place-items: center">
+              <div class="profile" style="justify-content: flex-end">
+                <p>
+                  <button
+                    class="collapse-toggle btn-lg"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    {{ info.username }}
+                  </button>
+                </p>
+                <div class="collapse-card collapse" id="collapseExample">
+                  <div class="card card-body">
+                    <form action="home">
+                    <p><strong>College name:</strong> {{ info.clg_name }}</p>
+                    <p><strong>Exam Appearing:</strong> {{ info.exam }}</p>
+                    <p><strong>10th Board:</strong> {{ info.board10 }}</p>
+                    <p><strong>10th Marks:</strong> {{ info.marks10 }}</p>
+                    <p><strong>Email:</strong> {{ info.email }}</p>
+                    <p><button type="submit" class="btn btn-danger">Exit</button></p>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  <div class="row" style="padding: 10px;margin-left: 30px;">
+    <div class="col-md-9">
+          <div id="status"></div>
+          <div id="question" style="margin: 10px; font-size: xx-large;"></div>
+          <div class="row">
+      <div id="options" class="col-md-4" style="margin-left: 30px;"></div>
+    <div class="col-md-4" id="img"></div>
+    </div>
+
+    <div id="operation-panel">
+      <button type="button" class="btn btn-secondary btn-lg" id="previousBtn">Previous</button>
+      <button type="button" class="btn btn-success btn-lg" id="saveAndNextBtn">Save and Next</button>
+      <button type="button" class="btn btn-secondary btn-lg" id="nextBtn">Next</button>
+      <button type="button" class="btn btn-warning btn-lg" id="submitBtn" disabled>Submit</button>
+
+    </div>
+  </div>
+    <div class="col-md-3">
+    <div id="timer" style="margin-top: 30px;"></div>
+      <div id="menu"></div>
+    </div>
+  </div>
+  
+  <script>
+    let nestedDictionary = {}; // Placeholder for the fetched nested dictionary
+    let currentQuestionIndex = 0;
+    let userAnswers = {}; // Placeholder for the user's answers
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const img=document.getElementById('img')
+    const previousBtn = document.getElementById('previousBtn');
+    const saveAndNextBtn = document.getElementById('saveAndNextBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const menuElement = document.getElementById('menu');
+    const timerElement = document.getElementById('timer');
+    const exitbtn=document.getElementById('exitBtn');
+    quizsubmit=false
+    let countdownTimer;
+
+    // Fetch the nested dictionary from the Django backend
+    async function fetchNestedDictionary() {
+      const response = await fetch('/cetapp/get-nested-dictionary/');
+      const data = await response.json();
+
+      // Add 'visited' property to each question and set it to false by default
+      data.questions.forEach((question) => {
+        question.visited = false;
+      });
+
+      nestedDictionary = data; // Assign the fetched data to the nestedDictionary variable
+      return data;
+    }
+
+    // Display the current question and options
+function displayQuestion() {
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+  questionElement.innerText =`${currentQuestionIndex+1}) ${currentQuestion.question}`;
+
+  optionsElement.innerHTML = ''; // Clear the options
+
+  currentQuestion.options.forEach((option, index) => {
+    const optionElement = document.createElement('div');
+    optionElement.innerText = `${index+1}) ${option}`;
+    optionElement.className = 'option';
+    optionElement.dataset.index = index; // Set the index as a custom data attribute
+    optionElement.addEventListener('click', selectOption);
+    if (option=== nestedDictionary.questions[currentQuestionIndex].correct_answer){
+      optionElement.classList.add('correct');
+    }
+    if (currentQuestion.userAnswer !== undefined && currentQuestion.userAnswer === index.toString()) {
+      optionElement.classList.add('selected');
+    }
+    optionsElement.appendChild(optionElement);
+  });
+
+  if (quizsubmit===true){
+    const correctopt=document.querySelector('.correct');
+    correctopt.style.color='green';
+    if (!correctopt.classList.contains('selected')){
+      const selectedopt=document.querySelector('.selected');
+      selectedopt.style.color='red'
+    }
+  }
+
+  updateMenu(); // Update the question menu
+  updateStatus(); // Update the question status
+}
+
+    // Select an option and store the user's answer
+    // Select an option and store the user's answer
+    function selectOption(event) {
+  const selectedOption = event.target;
+  const selectedText = selectedOption.innerText.trim();
+
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+
+  // Only update the answer if the question is already answered
+  if (currentQuestion.userAnswer !== undefined) {
+    currentQuestion.userAnswer = selectedText;
+    userAnswers[currentQuestionIndex] = selectedText; // Update the user's answer
+  }
+
+  // Remove the 'selected' class from all options
+  const optionElements = document.getElementsByClassName('option');
+  Array.from(optionElements).forEach((optionElement) => {
+    optionElement.classList.remove('selected');
+  });
+
+  // Add the 'selected' class to the selected option
+  selectedOption.classList.add('selected');
+
+  updateStatus(); // Update the question status
+}
+
+    // Go to the previous question
+    function goToPreviousQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        displayQuestion();
+      }
+    }
+
+    // Save the answer and go to the next question
+    // Save the answer and go to the next question
+    function saveAndNextQuestion() {
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+  currentQuestion.visited = true; // Mark the question as visited
+
+  if (currentQuestion.userAnswer === undefined) {
+    // Mark the question as answered and save the selected option
+    const selectedOption = optionsElement.querySelector('.selected');
+    if (selectedOption) {
+      const selectedIndex = selectedOption.dataset.index;
+      currentQuestion.userAnswer = selectedIndex;
+      userAnswers[currentQuestionIndex] = selectedIndex; // Update the user's answer
+    }
+  }
+
+  if (currentQuestionIndex < nestedDictionary.questions.length - 1) {
+    currentQuestionIndex++;
+    displayQuestion();
+  }
+
+  updateStatus(); // Update the question status
+}
+
+    // Go to the next question
+    function goToNextQuestion() {
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+  currentQuestion.visited = true; // Mark the question as visited
+
+  // Reset the user's answer for the current questio
+  if (currentQuestionIndex < nestedDictionary.questions.length - 1) {
+    currentQuestionIndex++;
+    displayQuestion();
+  }
+}
+
+    // Update the question menu
+    // Update the question menu
+function updateMenu() {
+  menuElement.innerHTML = '';
+
+  const groupBySubject = {}; // Group questions by subject
+
+  nestedDictionary.questions.forEach((question, index) => {
+    const menuItem = document.createElement('button');
+    menuItem.classList.add('btn');
+    menuItem.classList.add('btn-lg');
+    menuItem.innerText = `${index + 1}`;
+    menuItem.addEventListener('click', () => goToQuestion(index));
+    if (index === currentQuestionIndex) {
+      menuItem.classList.add('selected');
+    }
+  if (quizsubmit===true){
+    if (question.options[question.userAnswer] !== question.correct_answer) {
+      if (menuItem.classList.contains('answered')){
+      menuItem.style.backgroundColor='yellow';
+    }}
+  
+      }
+    
+
+    // Change the color based on the question status
+    if (question.userAnswer !== undefined) {
+      // Question answered
+      menuItem.classList.add('answered');
+    } else if (question.visited) {
+      // Question visited but not answered
+      menuItem.classList.add('unanswered');
+    } else {
+      // Question not visited
+      menuItem.classList.add('not-visited');
+    }
+
+    // Group questions by subject
+    if (groupBySubject[question.subject]) {
+      groupBySubject[question.subject].push(menuItem);
+    } else {
+      groupBySubject[question.subject] = [menuItem];
+    }
+  });
+
+  // Create a collapsible card for each subject group
+  for (const subject in groupBySubject) {
+    const subjectCard = document.createElement('div');
+    subjectCard.style.marginBottom = '10px';
+
+    const subjectCardHeader = document.createElement('div');
+    subjectCardHeader.classList.add('p');
+    subjectCardHeader.innerText = subject;
+
+    const subjectCardBody = document.createElement('div');
+
+    groupBySubject[subject].forEach((menuItem) => {
+      subjectCardBody.appendChild(menuItem);
+    });
+
+
+    subjectCard.appendChild(subjectCardHeader);
+    subjectCard.appendChild(subjectCardBody);
+    menuElement.appendChild(subjectCard);
+  }
+}
+
+
+    // Go to a specific question
+    function goToQuestion(index) {
+  currentQuestionIndex = index;
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+
+  // Mark the question as visited
+  currentQuestion.visited = true;
+
+  // Mark the question as answered or unanswered based on the user's answer
+  const menuButton = menuElement.children[index];
+  if (currentQuestion.userAnswer !== undefined) {
+    menuButton.classList.add('answered');
+  } else {
+    menuButton.classList.add('unanswered');
+  }
+  updateMenu()
+  updateStatus(); // Update the question status
+  displayQuestion(); // Display the selected question
+}
+
+    // Update the question status
+    // Update the question status
+    function updateStatus() {
+  const currentQuestion = nestedDictionary.questions[currentQuestionIndex];
+  const statusElement = document.getElementById('status');
+
+  if (currentQuestion.userAnswer !== undefined && currentQuestion.userAnswer !== null) {
+    statusElement.innerText = 'Answered';
+    statusElement.classList.remove('unanswered');
+  } else {
+    statusElement.innerText = 'Unanswered';
+    statusElement.classList.add('unanswered');
+  }
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = !isAnyQuestionAnswered();
+}
+
+function isAnyQuestionAnswered() {
+  return nestedDictionary.questions.some((question) => question.userAnswer !== undefined && question.userAnswer !== null);
+}
+    // Start the countdown timer
+function startTimer(duration) {
+  let timer = duration;
+  console.log()
+  countdownTimer = setInterval(function () {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+
+    timerElement.innerText = `Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+    if (--timer < 0) {
+      clearInterval(countdownTimer);
+      submitQuiz();
+    }
+  }, 1000);
+}
+
+
+    // Submit the quiz
+function submitQuiz() {
+  clearInterval(countdownTimer);
+  console.log(nestedDictionary)
+  // Disable all buttons
+  previousBtn.disabled = false;
+  saveAndNextBtn.disabled = true;
+  nextBtn.disabled = false;
+  submitBtn.disabled = true;
+  quizsubmit=true;
+  // Calculate the score
+  let score = 0;
+  nestedDictionary.questions.forEach((question,index) => {
+    if (question.options[question.userAnswer] === question.correct_answer) {
+      score=score+nestedDictionary.questions[index].marks;
+    }
+  });
+
+  // Display the score
+  questionElement.innerText = `Quiz completed! Your score is ${score}`;
+  optionsElement.innerHTML = '';
+  timerElement.innerText = '';
+
+  fetch('/cetapp/submit-nested-dictionary/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(nestedDictionary),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Print individual elements in the terminal
+      console.log('Received data from the Django backend:');
+      console.log('Nested Dictionary:', data);
+      console.log('First question:', data.questions[0]);
+      console.log('Second question:', data.questions[1]);
+      // ... Print other elements as needed
+    })
+    .catch(error => {
+      console.error('An error occurred while sending data to the Django backend:', error);
+    });
+  updateMenu(); // Update the question menu
+}
+
+
+    // Event listeners for the buttons
+    previousBtn.addEventListener('click', goToPreviousQuestion);
+    saveAndNextBtn.addEventListener('click', saveAndNextQuestion);
+    nextBtn.addEventListener('click', goToNextQuestion);
+    submitBtn.addEventListener('click', submitQuiz);
+
+    // Fetch the nested dictionary and start the quiz
+    fetchNestedDictionary().then(() => {
+      displayQuestion();
+      startTimer(nestedDictionary.duration); // Replace 30 with the desired quiz duration in minutes
+    });
+    
+
+
+  </script>
+</body>
+</html>

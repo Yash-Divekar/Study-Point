@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Reasult</title>
+</head>
+<body>
+    <h1>Exam Reasult - <a href="profile">{{username}}</a></h1>
+    {% for key, value in mydict.items %}
+        <div>
+            <form action="/cetapp/home" method="get">{% csrf_token %}
+            <h2>{{ key }}</h2>
+            <p>
+                <strong>Name:</strong> {{ value.name }}<br>
+                <strong>Year:</strong> {{ value.year }}<br>
+                <strong>Date:</strong> {{ value.date }}<br>
+                <strong>Shift:</strong> {{ value.shift }}<br>
+                <strong>Score:</strong>{{score}}<br>
+                <button type="submit">Home</button>
+            </p>
+        </form>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>

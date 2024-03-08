@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login page</title>
+    {% load static %}
+    <link rel="stylesheet"  href="{% static 'login.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="navbar" style="height: 150px; display: flex;">
+            <div class="nav-logo" style='height: 100px;width: 450px; margin-left: 50px;'>
+                    <div class="logo border">
+                    </div>
+            </div>
+            <div style="font-size: xxx-large; margin-left: 200px;">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-body" style="background-color: #05445e;">
+        <div class="login" style="background-color: beige;">
+            <h1 class="lo">Login</h1>
+            <ul>
+                <form method="post" action="login">{% csrf_token %}
+                <p class="u1">Username <input placeholder="" name="username"></p>
+                <p class="u2">Password <input type="password" placeholder="" name="pwd"></p>
+                <div class="butt1">
+                    <button class="butt"><i class="fa-solid fa-right-to-bracket"></i></button>
+                </div>
+            </form>
+                <div class="text">
+                    <p> Don't have an account? <a href="{% url 'signup' %}">Signup</a> </p>
+                </div>
+            </ul>
+        </div>
+    </div>
+</body>
+<footer>
+    <div class="panel1">
+        Back To Top
+    </div>
+    <div class="panel2">
+        <ul class="foot">
+            <h4>CONTACT NUMBER</h4>
+            <div class="cont">
+            <p>020-26058877 </p>
+            <p>020-26057983</p>
+        </div>
+        </ul>
+
+        <ul class="foot">
+            <h4>SOCIAL MEDIA</h4>
+            <div class="sm-logo">
+            <i class="fa-brands fa-instagram ig"></i>
+            <i class="fa-brands fa-linkedin ln"></i>
+        </div>
+        </ul>
+
+        <ul class="foot">
+            <h4>ADDRESS</h4>
+            <div class="cont">
+            <p>AISSMS Institute of Information Technology</p>
+            <p>Kennedy Road, Near RTO, Pune.</p>
+        </div>
+        </ul>
+
+        <ul class="foot">
+            <h4>ABOUT US</h4>
+        </ul>
+    </div>
+</footer>
+</html>

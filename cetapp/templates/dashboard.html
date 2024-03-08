@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'homepage.css'%}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .scroll-container {
+      overflow-y: auto;
+      white-space: nowrap;
+      padding: 20px;
+    }
+    .card {
+            width: 350px;
+            margin-right: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: #189ab4;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            color: #189ab4;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: #333333;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+    .btn-primary {
+      background-color: #189ab4;
+      border: none;
+    }
+    .main-body-new {
+      background-color: #05445e;
+    }
+    .btn-primary:hover {
+      background-color: #157d94;
+    }
+
+    .profile {
+      position: relative;
+    }
+
+    .collapse-toggle {
+      position: relative;
+      z-index: 2;
+      background-color: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .collapse-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    .collapse-card {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      z-index: 1;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      overflow: auto;
+      /* Added to enable scrolling within the card */
+      max-height: calc(100vh - 100% - 20px);
+      /* Added to limit the card height within the visible area */
+    }
+
+    .collapse-card.show {
+      position: absolute;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .collapse-card p {
+      color: #333333;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    
+  </style>
+</head>
+
+<body class="bg-light text-dark main-body-new ">
+  <header>
+    <div class="row" style="
+          background-color: #189ab4;
+          height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+        ">
+      <div class="col-md-3">
+        <div class="nav-logo">
+          <div class="logo" style="margin-left: 30px;"></div>
+        </div>
+      </div>
+      <div class="col-md-5"></div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-6" style="display: grid; place-items: center">
+            <form action="{% url 'syllabus' %}" method="post">{% csrf_token %}
+            <button type="submit">Syllabus</button>
+          </form>
+          </div>
+        
+          <!--<div class="col-md-4" style="display: grid; place-items: center">
+            <button>History</button>
+          </div>-->
+          <div class="col-md-6" style="display: grid; place-items: center">
+            <div class="profile" style="justify-content: flex-end;margin-top: 10px;">
+              <p>
+                <button class="collapse-toggle" data-bs-toggle="collapse"
+                  data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  {{ info.username }}
+                </button>
+              </p>
+              <div class="collapse-card collapse" id="collapseExample">
+                <div class="card card-body">
+                  <form action="logout">
+                    <p><strong>College name:</strong> {{ info.clg_name }}</p>
+                    <p><strong>Exam Appearing:</strong> {{ info.exam }}</p>
+                    <p><strong>10th Board:</strong> {{ info.board10 }}</p>
+                    <p><strong>10th Marks:</strong> {{ info.marks10 }}</p>
+                    <p><strong>Email:</strong> {{ info.email }}</p>
+                    <p><button type="submit" class="btn btn-danger">Exit</button></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <body class="main-body">
+    
+  
+  {% for key1, value1 in test.items %}
+  <div class="scroll-container">
+    <h4>{{key1}}</h4>
+    {% for key, value in value1.items %}
+    <div class="card" style="display: inline-block;">
+      <form action="exam" method="post">{% csrf_token %}
+        <h5 class="card-header" style="background-color: #189ab4; color: white;">{{ value.name }}</h5>
+        <div class="card-body" >
+          <h5 class="card-title">{{ value.date }} - {{ value.shift }}</h5>
+          <p class="card-text">Marks: {{value.marks}} Time: {{value.time}}</p>
+          <button type="submit" class="btn btn-primary" value="{{key}}" name="test_id">Take Test</button>
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+
+  <div>
+    <div class="scroll-container">
+      <h4>Subject Test</h4>
+      {% for key,value in subject.items %}
+      <div class="card" style="display: inline-block;">
+        <form action="exam" method="post">{% csrf_token %}
+          <h5 class="card-header">{{key}}</h5>
+          <div class="card-body" >
+            <p class="card-text" >Exam based on only {{key}} question</p>
+            <button type="submit" class="btn btn-primary" value="{{value.id}}" name="test_id">Take Test</button>
+          </div>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <!-- Add Bootstrap JS (Optional, for enhanced functionality) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Add event listener to enable scrolling with arrow keys
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") {
+        window.scrollBy({
+          left: -300,
+          behavior: "smooth"
+        });
+      } else if (e.key === "ArrowRight") {
+        window.scrollBy({
+          left: 300,
+          behavior: "smooth"
+        });
+      }
+    });
+
+    // Close collapse when clicking outside
+    document.addEventListener("click", function (event) {
+      var collapseCard = document.querySelector(".collapse-card");
+      var toggleButton = document.querySelector(".collapse-toggle");
+      var targetElement = event.target;
+
+      if (
+        collapseCard.classList.contains("show") &&
+        !toggleButton.contains(targetElement)
+      ) {
+        collapseCard.classList.remove("show");
+      }
+    });
+  </script>
+</body>
+<footer>
+  <div class="panel1">
+      <a href="#" style="color: black;">Back To Top </a>
+  </div>
+  <div class="panel2">
+      <ul class="foot">
+          <h4>CONTACT NUMBER</h4>
+          <div class="cont">
+          <p>020-26058877 </p>
+          <p>020-26057983</p>
+      </div>
+      </ul>
+
+      <ul class="foot">
+          <h4>SOCIAL MEDIA</h4>
+          <div class="sm-logo">
+          <i class="fa-brands fa-instagram ig"></i>
+          <i class="fa-brands fa-linkedin ln"></i>
+      </div>
+      </ul>
+
+      <ul class="foot">
+          <h4>ADDRESS</h4>
+          <div class="cont">
+          <p>AISSMS Institute of Information Technology</p>
+          <p>Kennedy Road, Near RTO, Pune.</p>
+      </div>
+      </ul>
+
+      <ul class="foot">
+          <h4>ABOUT US</h4>
+          <div class="row">
+            <div class="col-md-6">
+              Yash L Divekar <br>
+          Aditi R Ghuge<br>
+        </div>
+        <div class="col-md-6">
+          Avdhoot A Chavan<br>
+          Yash S Garud<br></div>
+          </div>
+          
+          
+      </ul>
+  </div>
+</footer>
+</body>
+
+</html>

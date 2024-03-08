@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        function show(shown, hidden) {
+          document.getElementById(shown).style.display='block';
+          document.getElementById(hidden).style.display='none';
+          return false;
+        }
+        </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cet App</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+</head>
+<body>
+    <div>
+    
+    <div style="font-family: Georgia, 'Times New Roman', Times, serif;">
+        
+        <h1>Welcome to Cet App</h1>
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags}} alert-dismissible fade show" role="alert">
+            <strong>Message:</strong>{{message}}
+        </div class='form'>
+        {% endfor %} 
+              <a href="#" onclick="return show('login','signup');">Log in</a>
+              <a href="#" onclick="return show('signup','login');">Sign up</a>
+            
+        <form action="/cetapp/signup_user" method="post" id="signup">{% csrf_token %}
+            <p> Enter your username  
+            <input type="text" name="username" id="username" placeholder="Enter yiur username"></p>
+            <p>Enter your password  
+            <input type="password" name="pwd" id="pwd"></p>
+            <p>Confirm your password   
+            <input type="password" name="cnf_pwd" id="cnf_pwd"></p>
+            <p>Enter you Name   
+            <input type="text" name="name" id="name" placeholder="Enter your full name"></p>
+            <p>Enter college name
+                <input type="text" name="clg_name" id="clg_name">
+            </p>
+            <p>Enter you examination  
+            <input type="text" name="exam" id="exam" , placeholder="examination"></p>
+            <p>Enter you 10th details
+                <input type="text" name="board10" id="board10" placeholder="Enter 10th board">
+                <input type="text" name="marks10" id="marks10" placeholder="Enter 10th marks">
+            </p>
+            <p>Enter your email 
+                <input type="email" name="email" id="email">
+            </p>
+            <button type="submit" name="action" value="signup">Create Account</button>
+        </form>
+
+        <form action="/cetapp/login_user" method="post" id="login">{% csrf_token %}
+            <p>Enter username  
+                <input type="text" name="username" id="username">
+            </p>
+            <p>Enter password  
+                <input type="password" name="pwd" id="pwd">
+            </p>
+            <button type="submit" name="action" value="login">Log in</button>
+        </form>
+    </div>
+    </div>
+</body>
+</html>

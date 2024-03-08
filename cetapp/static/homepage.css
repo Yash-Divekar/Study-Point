@@ -1,0 +1,135 @@
+/* Nav-Bar CSS starts*/
+
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+#navbar{
+    background-color:whitesmoke;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.nav-logo{
+    height: 80px;
+    width: 350px;
+}
+.logo{
+background-image: url("aissms-ioit-logo.png");
+background-size: cover;
+height: 100%;
+width: 100%;
+margin-right: 5px;
+}
+.border{
+    border: 1px solid transparent;
+}
+.logo:hover{
+    border: 2px solid white;
+}
+#menu-items{
+    height: 85;
+    width: auto;
+    display: flex;
+    padding: 5px;
+    justify-content: end;
+    color: white;
+    font-size: 20px;
+
+}
+.items{
+    margin-right: 60px;
+}
+
+li{
+    list-style-type: none;
+    text-decoration: none;
+    display: inline;
+    padding-left: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+li :hover{
+    color: white;
+}
+
+button{
+    height: 40px;
+    width: 90px;
+    background-color : #FFBF00;
+    font-size: large;
+    font-weight: 500;
+    border: 3px solid #FFBF00;
+    border-radius: 5%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+button:hover{
+    border:2px solid rgb(255, 183, 0);
+    background-color: rgb(249, 170, 1);
+}
+
+.main-body{
+    height: 100vh;
+    background-color: #05445e;
+    background-image: url("text.jpeg");
+    background-size: cover;
+
+}
+
+/*footer code*/
+.panel1{
+    height: 30px;
+    background-color: #28b0cb ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.panel2{
+    height: 200px;
+    background-color: #189AB4;
+    display: flex;
+    justify-content: space-evenly;
+}
+.n1{
+    padding-bottom: 7px;
+}
+.foot{
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ig{
+    margin-right: 5px;
+    font-size: 27px;
+}
+.ig:hover{
+background-color: beige;
+}
+.ln{
+    font-size: 27px;
+}
+.ln:hover{
+    background-color: beige;
+}
+
+.cont:hover{
+    color: white;
+}
+.main-body1 {
+    background-color: #05445e;
+  }
+.card1{
+    width: 50px;
+    height: 150px;
+}

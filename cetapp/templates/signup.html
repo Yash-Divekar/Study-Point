@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign up</title>
+    {% load static %}
+    
+    <link rel="stylesheet"  href="{% static 'signup.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+<body>
+    <header>
+        <div class="navbar" style="height: 150px; display: flex;">
+            <div class="nav-logo" style='height: 100px;width: 450px; margin-left: 50px;'>
+                    <div class="logo border">
+                    </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-body">
+        <div class="signup">
+            <div class="items">
+            <h3 class="su" style="margin-top: 20px;" >Sign Up</h3>
+            <ul>
+                <form action="/cetapp/signup" method="post">
+                    {% csrf_token %}
+
+            <p class="e1"> Name <input placeholder=" Full Name" name="name"></p>
+            <p class="e2">College <input placeholder="Enter college Name" name="clg_name"></p>
+            <p class="e3"> E-Mail id <input placeholder="Enter Valid E-Mail" name="email"></p>
+            <h3 class="info">10th info </h3>
+            <p class="e4">Board <input type="text" name="board10" placeholder="Enter your 10th Board">
+            </p>
+            <p class="e4">Percentage <input placeholder=" " name="marks10"></p>
+            <p class="e5">Examination <select name="exam">
+                <option value="">select option</option>
+                <option value="Mhtcet">MHT-CET</option>
+            </select></p>
+            <p class="e6">Username <input placeholder="create username " name="username"></p>
+            <p class="e7">Password <input type="password" placeholder=" At Least 8 Characters" name="pwd"> </p>
+            <p class="e8">Confirm Password <input type='password' placeholder=" Confirm Password " name='cnf_pwd'> </p>
+            <div class="butt1">
+            <button class="butt"><i class="fa-solid fa-right-to-bracket"></i></button>
+            </div>
+            </ul>
+        </form>            
+            </div>
+            </div>
+    </div>
+    <body>
+
+        <footer>
+            <div class="panel1">
+                Back To Top
+            </div>
+            <div class="panel2">
+                <ul class="foot">
+                    <h4>CONTACT NUMBER</h4>
+                    <div class="cont">
+                    <p>020-26058877 </p>
+                    <p>020-26057983</p>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>SOCIAL MEDIA</h4>
+                    <div class="sm-logo">
+                    <i class="fa-brands fa-instagram ig"></i>
+                    <i class="fa-brands fa-linkedin ln"></i>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>ADDRESS</h4>
+                    <div class="cont">
+                    <p>AISSMS Institute of Information Technology</p>
+                    <p>Kennedy Road, Near RTO, Pune.</p>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>ABOUT US</h4>
+                </ul>
+            </div>
+        </footer>
+</html>

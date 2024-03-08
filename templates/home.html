@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome
+        <a href="/cetapp/profile">{{username}}</a>
+    </h1>
+    {% for key, value in mydict.items %}
+        <div>
+            <form action="/cetapp/exam" method="get">{% csrf_token %}
+            <h2>{{ key }}</h2>
+            <p>
+                <strong>Name:</strong> {{ value.name }}<br>
+                <strong>Year:</strong> {{ value.year }}<br>
+                <strong>Date:</strong> {{ value.date }}<br>
+                <strong>Shift:</strong> {{ value.shift }}<br>
+                
+                <button type="submit" name='exam_id' value={{key}}>Take test</button>
+            </p>
+        </form>
+        </div>
+        <hr>
+    {% endfor %}
+    <button type="submit"><a href="/cetapp/logout_user">Log out</a></button>
+</body>
+</html>

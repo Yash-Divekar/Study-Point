@@ -1,0 +1,121 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+
+.navbar{
+  background-color: #189AB4;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.nav-logo{
+  height: 60px;
+  width: 270px;
+}
+.logo{
+background-image: url("aissms-ioit-logo.png");
+background-size: cover;
+height: 100%;
+width: 100%;
+margin-right: 0px;
+}
+.border{
+  border: 1px solid transparent;
+}
+.border:hover{
+  border: 1px solid white;
+}
+
+.main-body{
+  height: 100vh;
+  background-color: #05445e;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login{
+  height: 300px;
+  width: 525px;
+  background-color: beige;
+  border-radius: 10px;
+  
+}
+.lo{
+  padding-left: 220px;
+  padding-top:30px;
+  padding-bottom: 40px;
+}
+ul{
+  padding-left: 130px;
+  font-size: 1.3rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.u1{
+  padding-bottom: 20px;
+}
+.u2{
+  padding-bottom: 20px;
+}
+
+.butt{
+  background-color : #5fd8f0;
+  border:1.5px solid #5fd8f0 ;
+  border-radius: 10%;
+  height: 30px;
+  width: 70px;
+  margin-left: 120px;
+}
+.butt1 :hover{
+  background-color:  #d9f4fa;
+  border:1.5px solid #5fd8f0 ;
+}
+.text{
+  padding-left: 50px;
+  padding-top: 15px;
+  font-size: 0.9rem;
+}
+a{
+  text-decoration: none;
+}
+
+.panel1{
+  height: 30px;
+  background-color: #28b0cb ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.panel2{
+  height: 200px;
+  background-color: #189AB4;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.foot{
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.ig{
+  margin-right: 5px;
+  font-size: 27px;
+}
+.ig:hover{
+background-color: beige;
+}
+.ln{
+  font-size: 27px;
+}
+.ln:hover{
+  background-color: beige;
+}
+
+.cont:hover{
+  color: white;
+}

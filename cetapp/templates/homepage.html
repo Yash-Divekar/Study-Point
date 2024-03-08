@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homepage</title>
+    {% load static %}
+    <link rel="stylesheet"  href="{% static 'homepage.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <div class="nav-logo">
+                <div class="logo">
+                </div>
+            </div>
+            {% block menu %}
+                <div id="menu-items">
+                <ul><form action="login">
+                        <li><button type="submit" class="items" style="font-size:medium;">Contact Us</button></li>
+                        
+                        <li><button  type="submit" >Login</button></li>
+                        </form>
+                </ul>
+            </div>
+            {% endblock %}
+        </div>
+    </header>
+{% block main %}
+    <div class="main-body">
+{% endblock %}
+    </div>
+
+    <body>
+
+        <footer>
+            <div class="panel1">
+                <a href="#" style="color: black;">Back To Top </a>
+            </div>
+            <div class="panel2">
+                <ul class="foot">
+                    <h4>CONTACT NUMBER</h4>
+                    <div class="cont">
+                    <p>020-26058877 </p>
+                    <p>020-26057983</p>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>SOCIAL MEDIA</h4>
+                    <div class="sm-logo">
+                    <i class="fa-brands fa-instagram ig"></i>
+                    <i class="fa-brands fa-linkedin ln"></i>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>ADDRESS</h4>
+                    <div class="cont">
+                    <p>AISSMS Institute of Information Technology</p>
+                    <p>Kennedy Road, Near RTO, Pune.</p>
+                </div>
+                </ul>
+
+                <ul class="foot">
+                    <h4>ABOUT US</h4>
+                    <p class="n1">Yash Divekar</p>
+                    <p class="n1">Aditi Ghuge</p>
+                    <p class="n1">Avdhoot Chavan</p>
+                    <p class="n1">Yash Garud</p>
+                </ul>
+            </div>
+        </footer>
+</html>
